@@ -25,7 +25,7 @@ func (v *VARIANT) ToIDispatch() *IDispatch {
 
 // ToArray converts variant to SafeArray helper.
 func (v *VARIANT) ToArray() *SafeArrayConversion {
-	if v.VT != VT_SAFEARRAY {
+	if v.VT != VT_SAFEARRAY || v.VT != VT_ARRAY|VT_VARIANT {
 		if v.VT&VT_ARRAY == 0 {
 			return nil
 		}
@@ -100,6 +100,8 @@ func (v *VARIANT) Value() interface{} {
 		return v.ToIDispatch()
 	case VT_BOOL:
 		return v.Val != 0
+	case VT_ARRAY | VT_VARIANT:
+		return v.Val
 	}
 	return nil
 }
