@@ -1,6 +1,7 @@
 package ole
 
 import "unsafe"
+import "fmt"
 
 // NewVariant returns new variant based on type and value.
 func NewVariant(vt VT, val int64) VARIANT {
@@ -25,7 +26,8 @@ func (v *VARIANT) ToIDispatch() *IDispatch {
 
 // ToArray converts variant to SafeArray helper.
 func (v *VARIANT) ToArray() *SafeArrayConversion {
-	if v.VT != VT_SAFEARRAY {
+	fmt.Printf("%v\r\n", v.VT)
+	if v.VT != VT_SAFEARRAY || v.VT != VT_ARRAY|VT_VARIANT {
 		if v.VT&VT_ARRAY == 0 {
 			return nil
 		}
@@ -100,6 +102,9 @@ func (v *VARIANT) Value() interface{} {
 		return v.ToIDispatch()
 	case VT_BOOL:
 		return v.Val != 0
+	case VT_ARRAY | VT_VARIANT:
+		fmt.Printf("%v\n", v.Val)
+		return v.Val
 	}
 	return nil
 }
