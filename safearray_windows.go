@@ -301,7 +301,7 @@ func safeArrayUnlock(safearray *SafeArray) (err error) {
 // array.
 //
 // AKA: SafeArrayPutElement in Windows API.
-func safeArrayPutElement(safearray *SafeArray, index int64, element uintptr) (err error) {
+func safeArrayPutElement(safearray *SafeArray, index int32, element uintptr) (err error) {
 	err = convertHresultToError(
 		procSafeArrayPutElement.Call(
 			uintptr(unsafe.Pointer(safearray)),

@@ -188,7 +188,7 @@ func safeArrayUnlock(safearray *SafeArray) error {
 // array.
 //
 // AKA: SafeArrayPutElement in Windows API.
-func safeArrayPutElement(safearray *SafeArray, index int64, element uintptr) error {
+func safeArrayPutElement(safearray *SafeArray, index int32, element uintptr) error {
 	return NewError(E_NOTIMPL)
 }
 

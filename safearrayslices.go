@@ -17,7 +17,7 @@ func safeArrayFromByteSlice(slice []byte) (*SafeArray, error) {
 	}
 
 	for i, v := range slice {
-		if err := safeArrayPutElement(array, int64(i), uintptr(unsafe.Pointer(&v))); err != nil {
+		if err := safeArrayPutElement(array, int32(i), uintptr(unsafe.Pointer(&v))); err != nil {
 			return nil, errors.Wrap(err, "safeArrayPutElement for []byte")
 		}
 	}
@@ -32,7 +32,7 @@ func safeArrayFromStringSlice(slice []string) (*SafeArray, error) {
 	}
 
 	for i, v := range slice {
-		if err := safeArrayPutElement(array, int64(i), uintptr(unsafe.Pointer(SysAllocStringLen(v)))); err != nil {
+		if err := safeArrayPutElement(array, int32(i), uintptr(unsafe.Pointer(SysAllocStringLen(v)))); err != nil {
 			return nil, errors.Wrap(err, "safeArrayPutElement for []string")
 		}
 	}
@@ -47,7 +47,7 @@ func safeArrayFromUint16Slice(slice []uint16) (*SafeArray, error) {
 	}
 
 	for i, v := range slice {
-		if err := safeArrayPutElement(array, int64(i), uintptr(unsafe.Pointer(&v))); err != nil {
+		if err := safeArrayPutElement(array, int32(i), uintptr(unsafe.Pointer(&v))); err != nil {
 			return nil, errors.Wrap(err, "safeArrayPutElement for []uint16")
 		}
 	}
@@ -62,7 +62,7 @@ func safeArrayFromUint32Slice(slice []uint32) (*SafeArray, error) {
 	}
 
 	for i, v := range slice {
-		if err := safeArrayPutElement(array, int64(i), uintptr(unsafe.Pointer(&v))); err != nil {
+		if err := safeArrayPutElement(array, int32(i), uintptr(unsafe.Pointer(&v))); err != nil {
 			return nil, errors.Wrap(err, "safeArrayPutElement for []uint32")
 		}
 	}
@@ -77,7 +77,7 @@ func safeArrayFromUint64Slice(slice []uint64) (*SafeArray, error) {
 	}
 
 	for i, v := range slice {
-		if err := safeArrayPutElement(array, int64(i), uintptr(unsafe.Pointer(&v))); err != nil {
+		if err := safeArrayPutElement(array, int32(i), uintptr(unsafe.Pointer(&v))); err != nil {
 			return nil, errors.Wrap(err, "safeArrayPutElement for []uint64")
 		}
 	}
@@ -92,7 +92,7 @@ func safeArrayFromInt16Slice(slice []int16) (*SafeArray, error) {
 	}
 
 	for i, v := range slice {
-		if err := safeArrayPutElement(array, int64(i), uintptr(unsafe.Pointer(&v))); err != nil {
+		if err := safeArrayPutElement(array, int32(i), uintptr(unsafe.Pointer(&v))); err != nil {
 			return nil, errors.Wrap(err, "safeArrayPutElement for []int16")
 		}
 	}
@@ -107,7 +107,7 @@ func safeArrayFromInt32Slice(slice []int32) (*SafeArray, error) {
 	}
 
 	for i, v := range slice {
-		if err := safeArrayPutElement(array, int64(i), uintptr(unsafe.Pointer(&v))); err != nil {
+		if err := safeArrayPutElement(array, int32(i), uintptr(unsafe.Pointer(&v))); err != nil {
 			return nil, errors.Wrap(err, "safeArrayPutElement for []int32")
 		}
 	}
@@ -122,7 +122,7 @@ func safeArrayFromInt64Slice(slice []int64) (*SafeArray, error) {
 	}
 
 	for i, v := range slice {
-		if err := safeArrayPutElement(array, int64(i), uintptr(unsafe.Pointer(&v))); err != nil {
+		if err := safeArrayPutElement(array, int32(i), uintptr(unsafe.Pointer(&v))); err != nil {
 			return nil, errors.Wrap(err, "safeArrayPutElement for []int64")
 		}
 	}
