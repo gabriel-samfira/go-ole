@@ -3,6 +3,7 @@
 package ole
 
 import (
+	"fmt"
 	"math/big"
 	"syscall"
 	"time"
@@ -154,15 +155,63 @@ func invoke(disp *IDispatch, dispid int32, dispatch int16, params ...interface{}
 			case *VARIANT:
 				vargs[n] = NewVariant(VT_VARIANT|VT_BYREF, int64(uintptr(unsafe.Pointer(v.(*VARIANT)))))
 			case []byte:
-				safeByteArray := safeArrayFromByteSlice(v.([]byte))
+				safeByteArray, err := safeArrayFromByteSlice(v.([]byte))
+				if err != nil {
+					return nil, err
+				}
 				vargs[n] = NewVariant(VT_ARRAY|VT_UI1, int64(uintptr(unsafe.Pointer(safeByteArray))))
 				defer VariantClear(&vargs[n])
 			case []string:
-				safeByteArray := safeArrayFromStringSlice(v.([]string))
+				safeByteArray, err := safeArrayFromStringSlice(v.([]string))
+				if err != nil {
+					return nil, err
+				}
 				vargs[n] = NewVariant(VT_ARRAY|VT_BSTR, int64(uintptr(unsafe.Pointer(safeByteArray))))
 				defer VariantClear(&vargs[n])
+			case []uint16:
+				safeByteArray, err := safeArrayFromUint16Slice(v.([]uint16))
+				if err != nil {
+					return nil, err
+				}
+				vargs[n] = NewVariant(VT_ARRAY|VT_UI2, int64(uintptr(unsafe.Pointer(safeByteArray))))
+				defer VariantClear(&vargs[n])
+			case []uint32:
+				safeByteArray, err := safeArrayFromUint32Slice(v.([]uint32))
+				if err != nil {
+					return nil, err
+				}
+				vargs[n] = NewVariant(VT_ARRAY|VT_UI4, int64(uintptr(unsafe.Pointer(safeByteArray))))
+				defer VariantClear(&vargs[n])
+			case []uint64:
+				safeByteArray, err := safeArrayFromUint64Slice(v.([]uint64))
+				if err != nil {
+					return nil, err
+				}
+				vargs[n] = NewVariant(VT_ARRAY|VT_UI8, int64(uintptr(unsafe.Pointer(safeByteArray))))
+				defer VariantClear(&vargs[n])
+			case []int16:
+				safeByteArray, err := safeArrayFromInt16Slice(v.([]int16))
+				if err != nil {
+					return nil, err
+				}
+				vargs[n] = NewVariant(VT_ARRAY|VT_I2, int64(uintptr(unsafe.Pointer(safeByteArray))))
+				defer VariantClear(&vargs[n])
+			case []int32:
+				safeByteArray, err := safeArrayFromInt32Slice(v.([]int32))
+				if err != nil {
+					return nil, err
+				}
+				vargs[n] = NewVariant(VT_ARRAY|VT_I4, int64(uintptr(unsafe.Pointer(safeByteArray))))
+				defer VariantClear(&vargs[n])
+			case []int64:
+				safeByteArray, err := safeArrayFromInt64Slice(v.([]int64))
+				if err != nil {
+					return nil, err
+				}
+				vargs[n] = NewVariant(VT_ARRAY|VT_I8, int64(uintptr(unsafe.Pointer(safeByteArray))))
+				defer VariantClear(&vargs[n])
 			default:
-				panic("unknown type")
+				return nil, fmt.Errorf("unknown type %v", vv)
 			}
 		}
 		dispparams.rgvarg = uintptr(unsafe.Pointer(&vargs[0]))
